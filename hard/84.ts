@@ -1,35 +1,34 @@
 function largestRectangleArea(heights: number[]): number {
   const left: number[] = [];
-  const leftstack: number[] = [];
+  const stackL: number[] = [];
   const right: number[] = [];
-  const rightstack: number[] = [];
+  const stackR: number[] = [];
 
   for (let i = 0; i < heights.length; i++) {
+    // left
     while (
-      leftstack.length > 0 &&
-      heights[leftstack[leftstack.length - 1]] >= heights[i]
+      stackL.length > 0 &&
+      heights[stackL[stackL.length - 1]] >= heights[i]
     ) {
-      leftstack.pop();
+      stackL.pop();
     }
-    left[i] = leftstack.length === 0 ? -1 : leftstack[leftstack.length - 1];
-    leftstack.push(i);
+    left[i] = stackL.length === 0 ? -1 : stackL[stackL.length - 1];
+    stackL.push(i);
+    // right
     while (
-      rightstack.length > 0 &&
-      heights[rightstack[rightstack.length - 1]] >=
-        heights[heights.length - 1 - i]
+      stackR.length > 0 &&
+      heights[stackR[stackR.length - 1]] >= heights[heights.length - 1 - i]
     ) {
-      rightstack.pop();
+      stackR.pop();
     }
     right[heights.length - 1 - i] =
-      rightstack.length === 0
-        ? heights.length
-        : rightstack[rightstack.length - 1];
-    rightstack.push(heights.length - 1 - i);
+      stackR.length === 0 ? heights.length : stackR[stackR.length - 1];
+    stackR.push(heights.length - 1 - i);
   }
-
+  //area
   let largest = 0;
-  for (const i in heights) {
-    const area = (right[i]! - left[i]! - 1) * heights[i]!;
+  for (let i = 0; i < heights.length; i++) {
+    const area = (right[i] - left[i] - 1) * heights[i];
     largest = Math.max(area, largest);
   }
   return largest;
