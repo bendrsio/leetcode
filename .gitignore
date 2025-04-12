@@ -133,3 +133,4 @@ dist
 .vscode
 package-lock.json
 package.json
+.DS_Store
