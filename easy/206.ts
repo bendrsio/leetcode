@@ -9,3 +9,4 @@ function reverseList(head: ListNode | null): ListNode | null {
   }
   return back;
 }
+// O(n) time complexity, O(1) space complexity
