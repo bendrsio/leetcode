@@ -1,17 +1,19 @@
 function jump(nums: number[]): number {
-  let jumps: number[] = [0];
-  if (nums.length < 2) {
-    return 0;
-  }
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j <= i + nums[i] && j < nums.length; j++) {
-      if (jumps[j] === undefined) {
-        jumps[j] = jumps[i] + 1;
-        continue;
-      }
-      jumps[j] = Math.min(jumps[j], jumps[i] + 1);
+  const n = nums.length;
+  if (n < 2) return 0;
+
+  let jumps = 0;
+  let end = 0;
+  let farthest = 0;
+
+  for (let i = 0; i < n - 1; i++) {
+    farthest = Math.max(farthest, i + nums[i]);
+    if (i === end) {
+      jumps++;
+      end = farthest;
+      if (end >= n - 1) break;
     }
   }
-  return jumps[nums.length - 1];
+  return jumps;
 }
-// O(n^2) time complexity, O(n) space complexity
+// O(n) time complexity, O(1) space complexity
