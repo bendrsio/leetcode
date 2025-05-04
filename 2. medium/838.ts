@@ -5,15 +5,13 @@ function pushDominoes(dominoes: string): string {
   let strength = 0;
 
   for (let i = 0; i < n; i++) {
-    if (dominoes[i] === "R") strength = n;
-    if (dominoes[i] === "L") strength = 0;
     if (dominoes[i] === ".") strength = Math.max(strength - 1, 0);
+    else strength = dominoes[i] === "R" ? n : 0;
     force[i] += strength;
   }
   for (let i = n - 1; i >= 0; i--) {
-    if (dominoes[i] === "L") strength = -n;
-    if (dominoes[i] === "R") strength = 0;
     if (dominoes[i] === ".") strength = Math.min(strength + 1, 0);
+    else strength = dominoes[i] === "L" ? -n : 0;
     force[i] += strength;
   }
   for (let i = 0; i < n; i++) {
